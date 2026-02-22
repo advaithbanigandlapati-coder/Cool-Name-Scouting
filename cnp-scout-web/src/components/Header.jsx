@@ -27,7 +27,7 @@ export default function Header({ tab }) {
         marginLeft: 'auto', fontSize: 11, color: '#525252',
         fontFamily: 'var(--font-mono)',
       }}>
-        #30439 · Into The Deep 2024
+        #30439 · Decode 2025-2026
       </span>
     </header>
   );
