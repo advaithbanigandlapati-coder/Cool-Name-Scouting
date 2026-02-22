@@ -13,7 +13,7 @@ Team #${t.teamNumber} "${t.teamName || 'Unknown'}":
   Teleop: LowBasket×${t.teleopLowBasket} HighBasket×${t.teleopHighBasket} LowChamber×${t.teleopLowChamber} HighChamber×${t.teleopHighChamber}
   Endgame: ${endgameLabel(t.endgame)}`).join('\n');
 
-  return `You are an expert FTC strategist for the 2024-25 Into The Deep season.
+  return `You are an expert FTC strategist for the 2025-26 Decode season.
 You are advising team ${MY_TEAM_NAME} #${MY_TEAM_NUM} — they won Inspire 2 at their league meet and are pushing hard for Inspire 1 and States.
 
 OUR ROBOT (#${MY_TEAM_NUM}):
