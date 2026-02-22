@@ -1,0 +1,159 @@
+:root {
+  --bg:       #0a0a0a;
+  --bg2:      #141414;
+  --bg3:      #1e1e1e;
+  --border:   #2a2a2a;
+  --orange:   #f97316;
+  --orange2:  #fb923c;
+  --orange-dim:#7c3b0e;
+  --text:     #f5f5f5;
+  --text2:    #a3a3a3;
+  --text3:    #525252;
+  --grn:      #22c55e;
+  --yel:      #eab308;
+  --red:      #ef4444;
+  --radius:   10px;
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ── Typography ── */
+h1, h2, h3 { font-family: var(--font-head); letter-spacing: 0.02em; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--radius);
+  font-family: var(--font-body); font-weight: 600; font-size: 13px;
+  cursor: pointer; transition: all 0.15s; border: none;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--orange); color: #000;
+}
+.btn-primary:hover { background: var(--orange2); }
+.btn-primary:disabled { background: var(--orange-dim); color: var(--text3); cursor: not-allowed; }
+.btn-ghost {
+  background: transparent; color: var(--text2); border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--text3); color: var(--text); }
+.btn-danger {
+  background: #7f1d1d; color: var(--red);
+}
+.btn-danger:hover { background: #991b1b; }
+
+/* ── Card ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+/* ── Input ── */
+input, select, textarea {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text); border-radius: 6px;
+  padding: 8px 10px; font-family: var(--font-body); font-size: 13px;
+  outline: none; width: 100%;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--orange);
+}
+input::placeholder { color: var(--text3); }
+label {
+  font-size: 12px; color: var(--text2); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: block; margin-bottom: 5px;
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-block; padding: 2px 8px;
+  border-radius: 4px; font-size: 11px; font-weight: 700;
+  font-family: var(--font-mono); letter-spacing: 0.05em;
+}
+.badge-optimal { background: #14532d; color: #22c55e; }
+.badge-mid     { background: #713f12; color: #eab308; }
+.badge-bad     { background: #7f1d1d; color: #ef4444; }
+
+/* ── Toast / Status ── */
+.toast {
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--bg2); border: 1px solid var(--border);
+  color: var(--text); padding: 10px 16px;
+  border-radius: var(--radius); font-size: 13px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  z-index: 999; max-width: 320px;
+}
+.toast.ok     { border-color: var(--grn); }
+.toast.err    { border-color: var(--red); }
+.toast.warn   { border-color: var(--yel); }
+
+/* ── Spinner ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 16px 0;
+}
+
+/* ── Stat chip ── */
+.stat-chip {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px;
+  text-align: center;
+}
+.stat-chip .val {
+  font-family: var(--font-mono); font-size: 15px; font-weight: 500;
+  color: var(--orange);
+}
+.stat-chip .lbl {
+  font-size: 10px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* ── Empty state ── */
+.empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--text3); font-size: 13px;
+}
+.empty svg { margin-bottom: 12px; opacity: 0.3; }
+.empty h3  { font-family: var(--font-head); font-size: 22px; color: var(--text2); margin-bottom: 6px; }
