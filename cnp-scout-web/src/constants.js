@@ -1,4 +1,4 @@
-export const SEASON       = 2024;
+export const SEASON       = 2026;
 export const MY_TEAM_NUM  = '30439';
 export const MY_TEAM_NAME = 'Cool Name Pending';
 
