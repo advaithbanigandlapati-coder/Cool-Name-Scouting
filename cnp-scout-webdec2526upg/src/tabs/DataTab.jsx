@@ -133,7 +133,7 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
         <div style={{ display:'flex', gap:4, marginLeft:4 }}>
           {[
             ['all',     `All (${teams.length})`,              '#a3a3a3'],
-            ['targets', `★ Targets (${targets.length})`,      '#f97316'],
+            ['targets', `Targets (${targets.length})`,      '#f97316'],
             ['optimal', `OPTIMAL (${tiered.OPTIMAL.length})`, '#22c55e'],
             ['mid',     `MID (${tiered.MID.length})`,         '#eab308'],
             ['bad',     `BAD (${tiered.BAD.length})`,         '#ef4444'],
@@ -149,14 +149,14 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
         </div>
 
         <div style={{ marginLeft:'auto', fontSize:10, color:'#525252', fontFamily:'var(--font-mono)', textAlign:'right' }}>
-          {ftcDone}/{teams.length} FTCScout · click cell to edit · <span style={{color:'#f97316'}}>✦ AI</span>
+          {ftcDone}/{teams.length} FTCScout · click cell to edit · <span style={{color:'#f97316'}}>AI</span>
         </div>
       </div>
 
       {/* Alliance targets bar */}
       {targets.length > 0 && (
         <div style={{ padding:'7px 14px', background:'rgba(249,115,22,0.07)', borderBottom:'1px solid rgba(249,115,22,0.2)', flexShrink:0, display:'flex', gap:10, alignItems:'center', flexWrap:'wrap' }}>
-          <span style={{ fontSize:10, fontWeight:700, color:'#f97316', textTransform:'uppercase', letterSpacing:'0.05em' }}>★ Alliance Targets:</span>
+          <span style={{ fontSize:10, fontWeight:700, color:'#f97316', textTransform:'uppercase', letterSpacing:'0.05em' }}>Alliance Targets:</span>
           {targets.map(t => (
             <span key={t.teamNumber} style={{ fontSize:11, background:'rgba(249,115,22,0.15)', border:'1px solid rgba(249,115,22,0.3)', padding:'1px 10px', borderRadius:12, color: t.tier ? TIER_COLOR[t.tier] : '#f97316' }}>
               #{t.teamNumber} {t.teamName}{t.tier && <span style={{ marginLeft:5, fontSize:9 }}>({t.tier})</span>}
@@ -206,13 +206,13 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
                         <div style={{ gridColumn:'1/-1', fontSize:12, color:'#a3a3a3', borderLeft:'3px solid #f97316', paddingLeft:10, lineHeight:1.6 }}>{team.whyAlliance}</div>
                       )}
                       <div>
-                        <div style={{ fontSize:10, fontWeight:700, color:'#22c55e', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>⚡ Allied With Them</div>
+                        <div style={{ fontSize:10, fontWeight:700, color:'#22c55e', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>Allied With Them</div>
                         {(team.withTips||[]).map((tip,i) => (
                           <div key={i} style={{ fontSize:12, color:'#a3a3a3', marginBottom:5, paddingLeft:8, borderLeft:'2px solid #14532d', lineHeight:1.5 }}>{tip}</div>
                         ))}
                       </div>
                       <div>
-                        <div style={{ fontSize:10, fontWeight:700, color:'#ef4444', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>🛡 Against Them</div>
+                        <div style={{ fontSize:10, fontWeight:700, color:'#ef4444', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>Against Them</div>
                         {(team.againstTips||[]).map((tip,i) => (
                           <div key={i} style={{ fontSize:12, color:'#a3a3a3', marginBottom:5, paddingLeft:8, borderLeft:'2px solid #7f1d1d', lineHeight:1.5 }}>{tip}</div>
                         ))}
