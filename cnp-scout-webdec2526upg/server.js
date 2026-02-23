@@ -23,21 +23,25 @@ app.post('/api/analyze', async (req, res) => {
   }
   try {
     let { model, max_tokens, tools, messages, system } = req.body;
-    model      = model      || 'claude-opus-4-5-20250514';
+    model      = model      || 'claude-sonnet-4-6';
     max_tokens = max_tokens || 8000;
     const allTextParts = [];
     let iterations = 0;
     while (iterations++ < 10) {
       const payload = { model, max_tokens, messages, tools: tools || [] };
       if (system) payload.system = system;
+      const headers = {
+        'Content-Type':      'application/json',
+        'x-api-key':         apiKey,
+        'anthropic-version': '2023-06-01',
+      };
+      // Only include web-search beta when tools are actually being used
+      if (payload.tools && payload.tools.length > 0) {
+        headers['anthropic-beta'] = 'web-search-2025-03-05';
+      }
       const upstream = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: {
-          'Content-Type':      'application/json',
-          'x-api-key':         apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-beta':    'web-search-2025-03-05',
-        },
+        headers,
         body: JSON.stringify(payload),
       });
       const data = await upstream.json();
