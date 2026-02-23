@@ -144,7 +144,7 @@ export default function InitialScanTab({ teams, setTeams, setToast }) {
 
         {/* ── AI Scan ── */}
         <div className="card">
-          <h2 style={{ fontSize:20, marginBottom:4 }}>🔍 Scan Teams — AI + FTCScout</h2>
+          <h2 style={{ fontSize:20, marginBottom:4 }}>Scan Teams — AI + FTCScout</h2>
           <p style={{ fontSize:12, color:'#a3a3a3', marginBottom:14 }}>
             Enter team numbers → Claude searches FTCScout + web to auto-fill OPR, EPA, rank, record, and stats.
             <br/><span style={{ color:'#525252' }}>Or use "FTCScout Only" for just OPR/EPA without AI (faster + free).</span>
@@ -178,7 +178,7 @@ export default function InitialScanTab({ teams, setTeams, setToast }) {
         <div className="card">
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: showManual ? 14 : 0 }}>
             <div>
-              <h2 style={{ fontSize:20 }}>➕ Add Team Manually</h2>
+              <h2 style={{ fontSize:20 }}>Add Team Manually</h2>
               {!showManual && <p style={{ fontSize:12, color:'#525252', marginTop:2 }}>Add a single team with known stats without AI scan.</p>}
             </div>
             <button className="btn btn-ghost" style={{ fontSize:12 }} onClick={() => setShowManual(s=>!s)}>
@@ -207,7 +207,7 @@ export default function InitialScanTab({ teams, setTeams, setToast }) {
         <div className="card">
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: showPaste ? 10 : 0 }}>
             <div>
-              <h2 style={{ fontSize:20 }}>📋 Paste from Google Doc / Sheets</h2>
+              <h2 style={{ fontSize:20 }}>Paste from Google Doc / Sheets</h2>
               {!showPaste && <p style={{ fontSize:12, color:'#525252', marginTop:2 }}>Paste a copied table — auto-parses tab-separated rows.</p>}
             </div>
             <button className="btn btn-ghost" style={{ fontSize:12 }} onClick={() => setShowPaste(s=>!s)}>
