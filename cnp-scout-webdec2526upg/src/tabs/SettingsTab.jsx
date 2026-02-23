@@ -110,7 +110,7 @@ export default function SettingsTab({ settings, setSettings, mine, setMine, setT
 
         {/* ── Column Mapping ── */}
         <div className="card">
-          <h2 style={{ fontSize:20, marginBottom:4 }}>Column Mapping — PI3 Scouting Form</h2>
+          <h2 style={{ fontSize:20, marginBottom:4 }}>Column Mapping — Scouting Form</h2>
           <p style={{ fontSize:12, color:'#a3a3a3', marginBottom:16 }}>
             Match each field to your Google Form column header exactly.{' '}
             {headers.length === 0 && 'Load headers above, or type the exact column header text.'}
