@@ -66,7 +66,7 @@ function BestAlliance({ teams }) {
     <div style={{ padding:'0 0 20px' }}>
       {!hasAI && (
         <div style={{ padding:'10px 16px', background:'rgba(234,179,8,0.08)', border:'1px solid rgba(234,179,8,0.2)', borderRadius:6, margin:'0 0 16px', fontSize:12, color:'#eab308' }}>
-          ⚠️ Run "AI Analyze All" in the Data tab first for best results. Rankings below are based on match points and rank only.
+          Run "AI Analyze All" in the Data tab first for best results. Rankings below are based on match points and rank only.
         </div>
       )}
       <div style={{ fontSize:11, color:'#525252', textTransform:'uppercase', letterSpacing:'0.05em', marginBottom:12, fontWeight:700 }}>Top Alliance Picks — scored by AI tier × compat × match performance</div>
@@ -78,7 +78,7 @@ function BestAlliance({ teams }) {
           borderRadius:8, marginBottom:8,
         }}>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:18, fontWeight:900, color: idx===0?'#f97316': idx===1?'#a3a3a3': idx===2?'#a16207':'#3a3a3a', width:24, textAlign:'center' }}>
-            {idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':`#${idx+1}`}
+            {idx + 1}
           </div>
           <div style={{ flex:1 }}>
             <div style={{ display:'flex', alignItems:'center', gap:10 }}>
@@ -181,7 +181,7 @@ function OpponentChat({ teams, mine }) {
               placeholder="e.g. 16367" maxLength={6}
               style={{ fontFamily:'var(--font-mono)', fontSize:18, height:44 }}
             />
-            {knownTeam && <div style={{ fontSize:11, color:'#22c55e', marginTop:4 }}>✓ {knownTeam.teamName} — already in your data</div>}
+            {knownTeam && <div style={{ fontSize:11, color:'#22c55e', marginTop:4 }}>{knownTeam.teamName} — already in your data</div>}
           </div>
           <button className="btn btn-primary" onClick={research} disabled={loading || !teamInput} style={{ height:44, padding:'0 20px' }}>
             {loading && messages.length === 0 ? <><div className="spinner"/>Researching…</> : <><Sword size={14}/>Research</>}
