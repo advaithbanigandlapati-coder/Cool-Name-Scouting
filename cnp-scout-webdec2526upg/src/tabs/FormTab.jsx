@@ -27,11 +27,11 @@ export default function FormTab({ teams, setTeams, settings, setToast }) {
 
   async function importForm() {
     if (!settings.googleApiKey || !settings.sheetId) {
-      setToast({ msg:'⚙️ Set your Google API Key and Sheet ID in Settings first.', type:'err' }); return;
+      setToast({ msg:'Set your Google API Key and Sheet ID in Settings first.', type:'err' }); return;
     }
     const mapping = settings.columnMapping || {};
     if (!mapping.teamName) {
-      setToast({ msg:'⚙️ Map the Team Name column in Settings → Column Mapping first.', type:'warn' }); return;
+      setToast({ msg:'Map the Team Name column in Settings → Column Mapping first.', type:'warn' }); return;
     }
     setLoading(true);
     try {
@@ -85,7 +85,7 @@ export default function FormTab({ teams, setTeams, settings, setToast }) {
         )}
         {!setupOk && (
           <span style={{ fontSize:11, color:'#eab308', marginLeft:'auto' }}>
-            ⚠️ Go to Settings to add Google API Key + Sheet ID
+            Go to Settings to add Google API Key + Sheet ID
           </span>
         )}
       </div>
@@ -126,7 +126,7 @@ export default function FormTab({ teams, setTeams, settings, setToast }) {
             <h3>No Form Data</h3>
             <p>
               {!setupOk
-                ? 'Go to ⚙️ Settings → add your Google API Key + Sheet ID → Load Headers → map columns → Save.\nThen come back and click Import.'
+                ? 'Go to Settings → add your Google API Key + Sheet ID → Load Headers → map columns → Save.\nThen come back and click Import.'
                 : 'Click "Import from Google Sheets" above, or click "Setup Guide" if you haven\'t connected your sheet yet.'}
             </p>
           </div>
