@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { RefreshCw, Zap, ChevronDown, ChevronUp, Download, Copy, Check, Plus } from 'lucide-react';
 import DataTable from '../components/DataTable.jsx';
 import { runAnalysis } from '../api/claude.js';
-import { fetchTeamStats, probeProxy } from '../api/ftcscout.js';
+import { fetchTeamStats } from '../api/ftcscout.js';
 import { TIER_ORDER, TIER_COLOR, BLANK_TEAM } from '../constants.js';
 
 function CopyBtn({ text, label }) {
@@ -38,18 +38,9 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
 
   async function fetchAllFTC() {
     setFetching(true);
-    // Probe the proxy first — gives a clear error if server.js isn't deployed
-    try {
-      await probeProxy();
-    } catch (err) {
-      setFetching(false);
-      setToast({ msg: `FTCScout proxy error: ${err.message}`, type:'err' });
-      return;
-    }
-
     setToast({ msg:`Fetching FTCScout for ${teams.length} teams…`, type:'ok' });
     let updated = 0;
-    let firstError = null;
+    let proxyError = null;
     for (const team of teams) {
       try {
         const stats = await fetchTeamStats(team.teamNumber);
@@ -57,17 +48,19 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
           updateTeam(team.teamNumber, prev => ({ ...prev, opr: stats.opr||prev.opr, epa: stats.epa||prev.epa, teamName: prev.teamName||stats.teamName||prev.teamName, fetchStatus:'ok' }));
           updated++;
         }
+        // null just means team has no FTCScout data yet — not an error
       } catch (err) {
-        if (!firstError) firstError = err.message;
-        updateTeam(team.teamNumber, prev => ({ ...prev, fetchStatus:'err' }));
+        // Real error (network/proxy) — capture once and stop
+        proxyError = err.message;
+        break;
       }
       await new Promise(r => setTimeout(r, 120));
     }
     setFetching(false);
-    if (updated === 0 && firstError) {
-      setToast({ msg:`FTCScout failed: ${firstError}`, type:'err' });
+    if (proxyError) {
+      setToast({ msg:`FTCScout error: ${proxyError}`, type:'err' });
     } else {
-      setToast({ msg:`FTCScout: ${updated}/${teams.length} teams updated.${firstError ? ' Some failed: ' + firstError : ''}`, type: updated > 0 ? 'ok' : 'err' });
+      setToast({ msg:`FTCScout: ${updated}/${teams.length} teams have data.`, type:'ok' });
     }
   }
 
