@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { RefreshCw, Zap, ChevronDown, ChevronUp, Download, Copy, Check, Plus } from 'lucide-react';
 import DataTable from '../components/DataTable.jsx';
 import { runAnalysis } from '../api/claude.js';
-import { fetchTeamStats } from '../api/ftcscout.js';
+import { fetchTeamStats, probeProxy } from '../api/ftcscout.js';
 import { TIER_ORDER, TIER_COLOR, BLANK_TEAM } from '../constants.js';
 
 function CopyBtn({ text, label }) {
@@ -38,8 +38,18 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
 
   async function fetchAllFTC() {
     setFetching(true);
+    // Probe the proxy first — gives a clear error if server.js isn't deployed
+    try {
+      await probeProxy();
+    } catch (err) {
+      setFetching(false);
+      setToast({ msg: `FTCScout proxy error: ${err.message}`, type:'err' });
+      return;
+    }
+
     setToast({ msg:`Fetching FTCScout for ${teams.length} teams…`, type:'ok' });
     let updated = 0;
+    let firstError = null;
     for (const team of teams) {
       try {
         const stats = await fetchTeamStats(team.teamNumber);
@@ -47,19 +57,28 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
           updateTeam(team.teamNumber, prev => ({ ...prev, opr: stats.opr||prev.opr, epa: stats.epa||prev.epa, teamName: prev.teamName||stats.teamName||prev.teamName, fetchStatus:'ok' }));
           updated++;
         }
-      } catch { /* skip */ }
-      await new Promise(r => setTimeout(r, 100));
+      } catch (err) {
+        if (!firstError) firstError = err.message;
+        updateTeam(team.teamNumber, prev => ({ ...prev, fetchStatus:'err' }));
+      }
+      await new Promise(r => setTimeout(r, 120));
     }
     setFetching(false);
-    setToast({ msg:`✓ FTCScout: updated ${updated}/${teams.length} teams.`, type:'ok' });
+    if (updated === 0 && firstError) {
+      setToast({ msg:`FTCScout failed: ${firstError}`, type:'err' });
+    } else {
+      setToast({ msg:`FTCScout: ${updated}/${teams.length} teams updated.${firstError ? ' Some failed: ' + firstError : ''}`, type: updated > 0 ? 'ok' : 'err' });
+    }
   }
 
   async function analyze() {
     if (!teams.length) { setToast({ msg:'No teams loaded.', type:'warn' }); return; }
     setAnalyzing(true);
-    setToast({ msg:`Claude analyzing ${teams.length} teams — ~30–90s…`, type:'ok' });
+    setToast({ msg:`Analyzing ${teams.length} teams in batches of 5…`, type:'ok' });
     try {
-      const results = await runAnalysis(teams, mine);
+      const results = await runAnalysis(teams, mine, (batchIdx, total, batchSize) => {
+        setToast({ msg:`Batch ${batchIdx + 1}/${total} — analyzing ${batchSize} teams…`, type:'ok' });
+      });
       setTeams(prev => prev.map(t => {
         const r = results.find(r => String(r.teamNumber) === String(t.teamNumber));
         if (!r) return t;
