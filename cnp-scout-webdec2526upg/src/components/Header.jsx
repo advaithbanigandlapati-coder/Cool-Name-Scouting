@@ -1,5 +1,3 @@
-import { Crosshair } from 'lucide-react';
-
 const TITLES = {
   data:     'Scouting Data',
   scan:     'Import Teams',
@@ -16,7 +14,7 @@ export default function Header({ tab, teamCount, targetCount }) {
       padding:'0 20px', height:52,
       background:'#080808', borderBottom:'1px solid #1e1e1e', flexShrink:0,
     }}>
-      <Crosshair size={18} color="#f97316" strokeWidth={2.5} />
+      <img src="/logo.png" alt="CNP" style={{ width:32, height:32, objectFit:'contain' }} />
       <span style={{ fontFamily:'var(--font-head)', fontSize:20, letterSpacing:'0.08em', color:'#f97316' }}>
         CNP SCOUT
       </span>
