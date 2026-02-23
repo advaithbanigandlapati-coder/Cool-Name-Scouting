@@ -14,36 +14,33 @@ const STATS_QUERY = `
   }
 `;
 
-async function gql(query, variables) {
-  const res = await fetch(ENDPOINT, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ query, variables }),
-  });
-
-  // If we get HTML back, the proxy endpoint doesn't exist on the server
-  const contentType = res.headers.get('content-type') || '';
-  if (!contentType.includes('application/json')) {
-    throw new Error(`/api/ftcscout endpoint not found (got ${res.status} ${contentType.split(';')[0]}). Deploy the updated server.js.`);
-  }
-
-  const json = await res.json();
-  if (json.errors) throw new Error(json.errors.map(e => e.message).join(', '));
-  return json;
-}
-
-// Quick probe with a known team — call this before bulk fetching
-export async function probeProxy() {
-  const json = await gql(STATS_QUERY, { number: 755, season: SEASON });
-  if (!json?.data?.teamByNumber) throw new Error('FTCScout returned no data for team 755');
-  return true;
-}
-
 export async function fetchTeamStats(teamNumber) {
   const num = parseInt(teamNumber, 10);
-  if (isNaN(num)) throw new Error('Invalid team number');
+  if (isNaN(num)) return null;
 
-  const json = await gql(STATS_QUERY, { number: num, season: SEASON });
+  let res;
+  try {
+    res = await fetch(ENDPOINT, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ query: STATS_QUERY, variables: { number: num, season: SEASON } }),
+    });
+  } catch (err) {
+    throw new Error(`Network: ${err.message}`);
+  }
+
+  if (!res.ok) throw new Error(`Proxy ${res.status}`);
+
+  let json;
+  try {
+    json = await res.json();
+  } catch {
+    throw new Error('Proxy returned non-JSON — is server.js deployed?');
+  }
+
+  // GraphQL errors mean the team just has no data — not a hard failure
+  if (json.errors) return null;
+
   const team = json?.data?.teamByNumber;
   if (!team) return null;
 
