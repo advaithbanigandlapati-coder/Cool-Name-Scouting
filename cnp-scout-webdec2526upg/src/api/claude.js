@@ -47,13 +47,20 @@ function extractJSON(data) {
   }
 }
 
-export async function runAnalysis(teams, mine) {
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
+  return chunks;
+}
+
+export async function runAnalysis(teams, mine, onProgress) {
   const corrections = teams.flatMap(t =>
     Object.entries(t.humanEdits||{}).map(([f,e]) =>
       `  #${t.teamNumber}: "${f}" corrected to "${e.value}" — reason: ${e.reason}`
     )
   );
-  const prompt = `You are an elite FTC strategist for DECODE 2025-26.
+
+  const ourContext = `You are an elite FTC strategist for DECODE 2025-26.
 
 ${gameRef()}
 
@@ -61,21 +68,37 @@ OUR ROBOT — #${MY_TEAM_NUM} ${MY_TEAM_NAME}:
 ${teamBlock({...mine, teamNumber:MY_TEAM_NUM, teamName:MY_TEAM_NAME}, `#${MY_TEAM_NUM} ${MY_TEAM_NAME}`)}
   Strengths: ${mine.strengths||'—'} | Weaknesses: ${mine.weaknesses||'—'}
   Strategy: ${mine.strategy||'—'} | Notes: ${mine.extraNotes||'—'}
+${corrections.length ? `\nHUMAN CORRECTIONS (never override):\n${corrections.join('\n')}` : ''}`;
 
-${corrections.length ? `HUMAN CORRECTIONS (never override):\n${corrections.join('\n')}\n` : ''}
-ALL SCOUTED TEAMS:
-${teams.map(t => teamBlock(t, `#${t.teamNumber} "${t.teamName||'Unknown'}"`)).join('\n\n')}
+  const batches = chunkArray(teams, 5);
+  const allResults = [];
 
-Use web_search to look up each team on FTCScout for DECODE 2025-26 stats if data is missing.
+  for (let i = 0; i < batches.length; i++) {
+    const batch = batches[i];
+    if (onProgress) onProgress(i, batches.length, batch.length);
+
+    const prompt = `${ourContext}
+
+BATCH ${i + 1}/${batches.length} — analyze these ${batch.length} teams:
+${batch.map(t => teamBlock(t, `#${t.teamNumber} "${t.teamName||'Unknown'}"`)).join('\n\n')}
+
 For EACH team return ONLY a JSON array (zero markdown, zero preamble):
 [{"teamNumber":"XXXX","tier":"OPTIMAL|MID|BAD","compatScore":0-100,"notes":"2-3 sentences","complementary":"1 sentence","whyAlliance":"2-3 sentences","withTips":["tip1","tip2","tip3"],"againstTips":["tip1","tip2","tip3"]}]`;
 
-  const data = await callAPI({
-    model: 'claude-opus-4-6', max_tokens: 8000,
-    tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-    messages: [{ role: 'user', content: prompt }],
-  });
-  return extractJSON(data);
+    const data = await callAPI({
+      model: 'claude-sonnet-4-6', max_tokens: 4000,
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const batchResults = extractJSON(data);
+    allResults.push(...batchResults);
+
+    // Brief pause between batches to respect rate limits
+    if (i < batches.length - 1) await new Promise(r => setTimeout(r, 1500));
+  }
+
+  return allResults;
 }
 
 export async function scanTeams(teamNumbers, state) {
@@ -85,7 +108,7 @@ Return ONLY a JSON array, zero markdown:
 [{"teamNumber":"XXXX","teamName":"Name","stateRank":"15","rs":"Yes","matchPoints":"71.5","basePoints":"","autoPoints":"10.5","highScore":"90","wlt":"10-0-0","plays":"16","opr":"3.70","epa":""}]`;
 
   const data = await callAPI({
-    model: 'claude-opus-4-6', max_tokens: 4000,
+    model: 'claude-sonnet-4-6', max_tokens: 4000,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages: [{ role: 'user', content: prompt }],
   });
