@@ -119,7 +119,7 @@ export default function DataTable({ teams, onUpdateTeam, sortKey, sortDir, onSor
                 borderLeft: col.group !== TABLE_COLS[TABLE_COLS.indexOf(col)-1]?.group ? '1px solid #1e1e1e' : undefined,
               }} onClick={() => onSort(col.key)}>
                 <div style={{ display:'flex', alignItems:'center', gap:3, justifyContent:'center' }}>
-                  {col.ai {col.ai && <span style={{ fontSize:9, opacity:0.7 }}>✦</span>}{col.ai && <span style={{ fontSize:9, opacity:0.7 }}>✦</span>} <span style={{ fontSize:9, opacity:0.7, color:'#f97316' }}>AI</span>}
+                  {col.ai && <span style={{ fontSize:9, opacity:0.7 }}>✦</span>}
                   {col.label}
                   <SortIcon col={col} />
                 </div>
