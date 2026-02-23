@@ -71,7 +71,7 @@ For EACH team return ONLY a JSON array (zero markdown, zero preamble):
 [{"teamNumber":"XXXX","tier":"OPTIMAL|MID|BAD","compatScore":0-100,"notes":"2-3 sentences","complementary":"1 sentence","whyAlliance":"2-3 sentences","withTips":["tip1","tip2","tip3"],"againstTips":["tip1","tip2","tip3"]}]`;
 
   const data = await callAPI({
-    model: 'claude-opus-4-5-20250514', max_tokens: 8000,
+    model: 'claude-opus-4-6', max_tokens: 8000,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages: [{ role: 'user', content: prompt }],
   });
@@ -85,7 +85,7 @@ Return ONLY a JSON array, zero markdown:
 [{"teamNumber":"XXXX","teamName":"Name","stateRank":"15","rs":"Yes","matchPoints":"71.5","basePoints":"","autoPoints":"10.5","highScore":"90","wlt":"10-0-0","plays":"16","opr":"3.70","epa":""}]`;
 
   const data = await callAPI({
-    model: 'claude-opus-4-5-20250514', max_tokens: 4000,
+    model: 'claude-opus-4-6', max_tokens: 4000,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages: [{ role: 'user', content: prompt }],
   });
@@ -115,7 +115,7 @@ Then give me:
     : [{ role: 'user', content: initialPrompt }];
 
   const data = await callAPI({
-    model: 'claude-opus-4-5-20250514', max_tokens: 2000,
+    model: 'claude-opus-4-6', max_tokens: 2000,
     system: systemPrompt,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages,
