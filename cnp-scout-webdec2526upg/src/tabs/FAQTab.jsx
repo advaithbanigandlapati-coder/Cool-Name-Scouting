@@ -59,16 +59,16 @@ export default function FAQTab() {
         </div>
 
         {/* ── QUICK START ── */}
-        <Section title="⚡ Quick Start — Read This First" defaultOpen={true}>
+        <Section title="Quick Start — Read This First" defaultOpen={true}>
           <P>CNP Scout has 6 tabs. Here's what they do and what order to use them:</P>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:14 }}>
             {[
-              ['📊 Data',     'Main scouting table. All team stats, AI analysis, sorting/filtering.'],
-              ['🔍 Scan',     'Add teams by number — AI fetches their stats automatically.'],
-              ['📋 Form',     'Import your Google Form responses from Google Sheets.'],
-              ['⚔️ Alliance', 'Best alliance picks + opponent research chatbot.'],
-              ['❓ FAQ',      'This page.'],
-              ['⚙️ Settings', 'API keys, column mapping, your robot\'s stats.'],
+              ['Data',     'Main scouting table. All team stats, AI analysis, sorting/filtering.'],
+              ['Scan',     'Add teams by number — AI fetches their stats automatically.'],
+              ['Form',     'Import your Google Form responses from Google Sheets.'],
+              ['Alliance', 'Best alliance picks + opponent research chatbot.'],
+              ['Help',      'This page.'],
+              ['Settings', 'API keys, column mapping, your robot\'s stats.'],
             ].map(([tab, desc]) => (
               <div key={tab} style={{ background:'#0f0f0f', border:'1px solid #1e1e1e', borderRadius:6, padding:'10px 12px' }}>
                 <div style={{ fontWeight:700, fontSize:13, color:'#f97316', marginBottom:4 }}>{tab}</div>
@@ -76,11 +76,11 @@ export default function FAQTab() {
               </div>
             ))}
           </div>
-          <Tip>✓ Recommended order: Settings → Form → Scan → Data → Alliance</Tip>
+          <Tip>Recommended order: Settings → Form → Scan → Data → Alliance</Tip>
         </Section>
 
         {/* ── SETTINGS FIRST ── */}
-        <Section title="⚙️ First-Time Setup (Settings Tab)">
+        <Section title="First-Time Setup (Settings Tab)">
           <P>Before anything else, go to <b style={{color:'#f97316'}}>Settings</b> and fill in:</P>
           <Step n="1"><b style={{color:'#e5e5e5'}}>Google API Key</b> — needed to read your scouting form responses from Google Sheets.<br/>
             Get one free: <span style={{color:'#60a5fa'}}>console.cloud.google.com</span> → Create Project → APIs &amp; Services → Library → search "Google Sheets API" → Enable → Credentials → Create API Key</Step>
@@ -91,11 +91,11 @@ export default function FAQTab() {
           <Step n="4">In <b style={{color:'#e5e5e5'}}>Column Mapping</b>, use the dropdowns to match each field to your form's column. This is how CNP Scout knows which column is "team name", which is "balls in auto", etc.</Step>
           <Step n="5">Fill in <b style={{color:'#e5e5e5'}}>Our Robot Stats</b> — your match points, strengths, weaknesses. This is what Claude uses when analyzing alliance compatibility.</Step>
           <Step n="6">Click <b style={{color:'#f97316'}}>Save Settings</b>.</Step>
-          <Warn>⚠️ Your Google Sheet must be shared as "Anyone with the link → Viewer" for the API to read it.</Warn>
+          <Warn>Your Google Sheet must be shared as "Anyone with the link → Viewer" for the API to read it.</Warn>
         </Section>
 
         {/* ── GOOGLE FORM SETUP ── */}
-        <Section title="📋 How to Connect Your Google Form / Sheets">
+        <Section title="How to Connect Your Google Form / Sheets">
           <P>Your Google Form automatically creates a linked spreadsheet. Here's how to connect it:</P>
           <Step n="1"><b style={{color:'#e5e5e5'}}>Open your Google Form</b> → click the <b>Responses</b> tab → click the green Sheets icon → "Create a new spreadsheet". This creates the linked sheet.</Step>
           <Step n="2"><b style={{color:'#e5e5e5'}}>Share the sheet:</b> In the spreadsheet, click Share → change from "Restricted" to "Anyone with the link" → Viewer. Click Done.</Step>
@@ -103,7 +103,7 @@ export default function FAQTab() {
           <Step n="4">Go to <b style={{color:'#f97316'}}>Settings</b> → paste your Google API key and Sheet ID → click Load Column Headers.</Step>
           <Step n="5">Map your form columns in the Column Mapping section. Your form's "Team Name" question becomes the <b>teamName</b> mapping, etc.</Step>
           <Step n="6">Go to <b style={{color:'#f97316'}}>Form tab</b> → click "Import from Google Sheets". Your responses appear instantly.</Step>
-          <Tip>✓ Every new form response is automatically added to the sheet. Just re-import to get the latest data.</Tip>
+          <Tip>Every new form response is automatically added to the sheet. Just re-import to get the latest data.</Tip>
           <div style={{ marginTop:14 }}>
             <div style={{ fontSize:11, fontWeight:700, color:'#a78bfa', textTransform:'uppercase', letterSpacing:'0.05em', marginBottom:8 }}>Your form's team name column format</div>
             <P>The form likely stores team names as "755 -- Delbotics". CNP Scout automatically extracts the number from this format. As long as the team number appears first, it works.</P>
@@ -116,7 +116,7 @@ export default function FAQTab() {
         </Section>
 
         {/* ── IMPORT TEAMS ── */}
-        <Section title="🔍 Adding Teams (Scan Tab)">
+        <Section title="Adding Teams (Scan Tab)">
           <P>Two ways to add teams to the Data table:</P>
           <Step n="1"><b style={{color:'#e5e5e5'}}>AI Scan</b> — Enter team numbers (any format, comma/space/newline separated). Claude searches FTCScout + web to auto-fill OPR, EPA, rank, record, and stats.
             <CopyBox text={`Example input:
@@ -126,12 +126,12 @@ export default function FAQTab() {
           <Step n="2"><b style={{color:'#e5e5e5'}}>Paste from Google Doc</b> — If you have a scouting doc with a table, select all rows, copy, and paste here. It auto-parses tab-separated columns.
             Expected column order:
             <CopyBox text="Team # | Team Name | State Rank | RS | 1.17.26 | Match Pts | Base Pts | Auto Pts | High Score | W-L-T | Plays" label="Expected column order" /></Step>
-          <Tip>✓ You can also manually add individual teams using the "+ Add Team" button and typing in the data directly.</Tip>
-          <Warn>⚠️ AI Scan uses Claude (costs a tiny bit — ~$0.01/scan). FTCScout is always free.</Warn>
+          <Tip>You can also manually add individual teams using the "+ Add Team" button and typing in the data directly.</Tip>
+          <Warn>AI Scan uses uses Claude (costs a tiny bit — ~$0.01/scan). FTCScout is always free.</Warn>
         </Section>
 
         {/* ── DATA TABLE ── */}
-        <Section title="📊 Using the Data Table">
+        <Section title="Using the Data Table">
           <P>The main table shows all scouted teams with columns from multiple sources:</P>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:14 }}>
             {[
@@ -152,11 +152,11 @@ export default function FAQTab() {
           <Step n="4">Click <b style={{color:'#f97316'}}>AI Analyze All</b> to run Claude's full analysis — tiers, compat scores, strategy tips (~30–60s).</Step>
           <Step n="5">Use filter chips (OPTIMAL / MID / BAD / ★ Targets) to narrow the view. Click any column header to sort.</Step>
           <Step n="6">Expand the Strategy Tips panel at the bottom to see per-team allied/against tips.</Step>
-          <Tip>✓ Use CSV export to share the full table with your drive team.</Tip>
+          <Tip>Use CSV export to share the full table with your drive team.</Tip>
         </Section>
 
         {/* ── ALLIANCE TAB ── */}
-        <Section title="⚔️ Alliance Tab — Best Picks + Strategy Chatbot">
+        <Section title="Alliance Tab — Best Picks + Strategy Chatbot">
           <P>The Alliance tab has two sections:</P>
           <Step n="1"><b style={{color:'#e5e5e5'}}>Best Alliance Picks</b> — Automatically calculates the top alliance partner combinations from your loaded teams, weighted by AI tier, compat score, and match performance.</Step>
           <Step n="2"><b style={{color:'#e5e5e5'}}>Opponent Research</b> — Enter any team number. Claude looks them up on FTCScout + web and gives you a full strategic brief: their scoring profile, strengths, weaknesses, and 3 specific tips for beating them.</Step>
@@ -165,11 +165,11 @@ export default function FAQTab() {
 "How do they typically handle the gate?"
 "What's their endgame strategy?"
 "What should we do differently if we're in auto together?"`} label="Follow-up question examples" /></Step>
-          <Tip>✓ Opponent research uses Claude + web search. Works for any FTC team worldwide — not just teams in your league.</Tip>
+          <Tip>Opponent research uses Claude + web search. Works for any FTC team worldwide — not just teams in your league.</Tip>
         </Section>
 
         {/* ── TROUBLESHOOTING ── */}
-        <Section title="🔧 Troubleshooting">
+        <Section title="Troubleshooting">
           {[
             ['Claude says "ANTHROPIC_API_KEY not set"', 'Go to Render → your service → Environment → add ANTHROPIC_API_KEY with your key from console.anthropic.com'],
             ['FTCScout fetch fails / shows —', 'This was a CORS bug — now fixed via server proxy. If it still fails, check /health endpoint on your server.'],
@@ -187,7 +187,7 @@ export default function FAQTab() {
         </Section>
 
         {/* ── COST ── */}
-        <Section title="💰 API Costs">
+        <Section title="API Costs">
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10 }}>
             {[
               ['FTCScout', 'Free', 'Always'],
