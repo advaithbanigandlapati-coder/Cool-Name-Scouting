@@ -22,7 +22,6 @@ function CopyBtn({ text, label }) {
 export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
   const [analyzing,  setAnalyzing]  = useState(false);
   const [fetching,   setFetching]   = useState(false);
-  const [expanded,   setExpanded]   = useState(null);
   const [sortKey,    setSortKey]    = useState('stateRank');
   const [sortDir,    setSortDir]    = useState('asc');
   const [filter,     setFilter]     = useState('all');
@@ -185,56 +184,6 @@ export default function DataTab({ teams, setTeams, mine, settings, setToast }) {
       ) : (
         <div style={{ flex:1, overflow:'hidden', display:'flex', flexDirection:'column' }}>
           <DataTable teams={sorted} onUpdateTeam={updateTeam} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
-
-          {/* Strategy tips */}
-          {sorted.some(t => t.withTips?.length) && (
-            <div style={{ borderTop:'1px solid #1e1e1e', overflowY:'auto', maxHeight:260, background:'#080808', flexShrink:0 }}>
-              <div style={{ padding:'5px 14px', fontSize:9, color:'#3a3a3a', textTransform:'uppercase', letterSpacing:'0.05em', borderBottom:'1px solid #111' }}>
-                Strategy Tips — click to expand
-              </div>
-              {sorted.filter(t => t.withTips?.length || t.againstTips?.length).map(team => (
-                <div key={team.teamNumber} style={{ borderBottom:'1px solid #0f0f0f' }}>
-                  <button onClick={() => setExpanded(e => e===team.teamNumber ? null : team.teamNumber)}
-                    style={{ width:'100%', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'center', gap:10, padding:'7px 14px', color:'var(--text)', textAlign:'left' }}>
-                    <span style={{ fontFamily:'var(--font-mono)', color:'#f97316', fontSize:12 }}>#{team.teamNumber}</span>
-                    <span style={{ fontSize:12 }}>{team.teamName}</span>
-                    {team.tier && (
-                      <span style={{ fontSize:10, color: TIER_COLOR[team.tier], fontFamily:'var(--font-mono)', background:`${TIER_COLOR[team.tier]}22`, padding:'0px 6px', borderRadius:3 }}>
-                        {team.tier} {team.compatScore?`${team.compatScore}%`:''}
-                      </span>
-                    )}
-                    <CopyBtn text={[
-                      team.whyAlliance && `Alliance rationale: ${team.whyAlliance}`,
-                      team.withTips?.length && `Allied tips:\n${team.withTips.map((t,i)=>`${i+1}. ${t}`).join('\n')}`,
-                      team.againstTips?.length && `Against tips:\n${team.againstTips.map((t,i)=>`${i+1}. ${t}`).join('\n')}`,
-                    ].filter(Boolean).join('\n\n')} label="Tips" />
-                    <div style={{ marginLeft:'auto', color:'#525252' }}>
-                      {expanded===team.teamNumber ? <ChevronUp size={12}/> : <ChevronDown size={12}/>}
-                    </div>
-                  </button>
-                  {expanded === team.teamNumber && (
-                    <div style={{ padding:'4px 14px 14px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
-                      {team.whyAlliance && (
-                        <div style={{ gridColumn:'1/-1', fontSize:12, color:'#a3a3a3', borderLeft:'3px solid #f97316', paddingLeft:10, lineHeight:1.6 }}>{team.whyAlliance}</div>
-                      )}
-                      <div>
-                        <div style={{ fontSize:10, fontWeight:700, color:'#22c55e', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>Allied With Them</div>
-                        {(team.withTips||[]).map((tip,i) => (
-                          <div key={i} style={{ fontSize:12, color:'#a3a3a3', marginBottom:5, paddingLeft:8, borderLeft:'2px solid #14532d', lineHeight:1.5 }}>{tip}</div>
-                        ))}
-                      </div>
-                      <div>
-                        <div style={{ fontSize:10, fontWeight:700, color:'#ef4444', marginBottom:6, textTransform:'uppercase', letterSpacing:'0.05em' }}>Against Them</div>
-                        {(team.againstTips||[]).map((tip,i) => (
-                          <div key={i} style={{ fontSize:12, color:'#a3a3a3', marginBottom:5, paddingLeft:8, borderLeft:'2px solid #7f1d1d', lineHeight:1.5 }}>{tip}</div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>
