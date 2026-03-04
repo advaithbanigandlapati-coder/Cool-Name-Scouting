@@ -435,7 +435,7 @@ ${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wl
         display:'flex',gap:8,alignItems:'center',flexShrink:0}}>
         <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value)}
           onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}}
-          placeholder="Ask anything… or say 'generate a strategy report'"
+          placeholder="Ask anything…"
           disabled={loading}
           style={{flex:1,fontSize:13,padding:'10px 16px',borderRadius:24,
             background:'#0f0f0f',border:'1px solid #2a2a2a'}}/>
