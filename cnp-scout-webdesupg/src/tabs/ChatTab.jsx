@@ -257,7 +257,7 @@ ${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wl
           max_tokens:2000,
           tools:[{type:'web_search_20250305',name:'web_search'}],
           system:SYSTEM,
-          messages:history.slice(-20),
+          messages:history.slice(-20).map(({role,content})=>({role,content})),
         }),
       });
       const data=await res.json();
@@ -283,7 +283,7 @@ ${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wl
       {/* Header */}
       <div style={{padding:'10px 16px',borderBottom:'1px solid #1e1e1e',background:'#0a0a0a',display:'flex',alignItems:'center',gap:10,flexShrink:0}}>
         <span style={{fontSize:13,fontWeight:600,color:'#a3a3a3'}}>Scout AI</span>
-        <span style={{fontSize:11,color:'#3a3a3a',fontFamily:'var(--font-mono)'}}>{teams.length} teams · V3 · Report and WebScrape</span>
+        <span style={{fontSize:11,color:'#3a3a3a',fontFamily:'var(--font-mono)'}}>{teams.length} teams · web search on</span>
         {!getApiKey()&&<span style={{fontSize:11,color:'#ef4444'}}>⚠ Set API key in Settings</span>}
         <div style={{marginLeft:'auto',display:'flex',gap:6}}>
           <button className="btn btn-ghost" style={{fontSize:11}} onClick={()=>{setShowReports(p=>!p);setShowArchive(false);}}>
@@ -355,7 +355,7 @@ ${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wl
       <div style={{padding:'12px 16px',borderTop:'1px solid #1e1e1e',background:'#080808',display:'flex',gap:8,alignItems:'center',flexShrink:0}}>
         <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value)}
           onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}}
-          placeholder="Ask anything…"
+          placeholder="Ask anything… say 'generate a report' for a printable PDF"
           disabled={loading}
           style={{flex:1,fontSize:13,padding:'10px 16px',borderRadius:24,background:'#0f0f0f',border:'1px solid #2a2a2a'}}/>
         <button onClick={send} disabled={!input.trim()||loading} style={{
