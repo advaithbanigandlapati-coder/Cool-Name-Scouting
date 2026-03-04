@@ -350,7 +350,7 @@ ${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wl
       <div style={{padding:'10px 16px',borderBottom:'1px solid #1e1e1e',background:'#0a0a0a',
         display:'flex',alignItems:'center',gap:10,flexShrink:0}}>
         <span style={{fontSize:13,fontWeight:600,color:'#a3a3a3'}}>Scout AI</span>
-        <span style={{fontSize:11,color:'#3a3a3a',fontFamily:'var(--font-mono)'}}>{teams.length} teams · web search enabled</span>
+        <span style={{fontSize:11,color:'#3a3a3a',fontFamily:'var(--font-mono)'}}>{teams.length} teams · v2: report and webscrape</span>
         {!getApiKey() && <span style={{fontSize:11,color:'#ef4444'}}>⚠ Set API key in Settings</span>}
         <div style={{marginLeft:'auto',display:'flex',gap:6}}>
           <button className="btn btn-ghost" style={{fontSize:11,gap:4}} onClick={()=>{setShowPDFs(p=>!p);setShowArchive(false);}}>
