@@ -1,29 +1,63 @@
-// CNP Scouting Doc — League Meet 1.17.26
-// Columns: teamNumber, teamName, stateRank, rs, rpScore(1.17.26),
-//          matchPoints, basePoints, autoPoints, highScore, wlt, plays
+// NJ STATE CHAMPIONSHIP TEAMS — DECODE 25-26
+// OPR/rank/record sourced from ftcstats.org NJ 2025
+// Conference tournament points from bracket doc
+
 export const INITIAL_TEAMS = [
-  { teamNumber:'755',   teamName:'Delbotics',                    stateRank:'5',  rs:'Yes', rpScore:'4.50', matchPoints:'99.50', basePoints:'12.00', autoPoints:'36.80', highScore:'126', wlt:'10-0-0', plays:'16' },
-  { teamNumber:'6101',  teamName:'Energized Hazards',            stateRank:'13', rs:'No',  rpScore:'4.10', matchPoints:'64.00', basePoints:'12.00', autoPoints:'19.20', highScore:'123', wlt:'10-0-0', plays:'16' },
-  { teamNumber:'9853',  teamName:'Chatham Cougars',              stateRank:'29', rs:'Yes', rpScore:'2.90', matchPoints:'59.40', basePoints:'9.50',  autoPoints:'15.00', highScore:'100', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'9889',  teamName:'Cruise Control',               stateRank:'10', rs:'Yes', rpScore:'2.90', matchPoints:'59.40', basePoints:'9.50',  autoPoints:'15.00', highScore:'100', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'11248', teamName:'//Cougars',                    stateRank:'24', rs:'Yes', rpScore:'3.10', matchPoints:'72.70', basePoints:'12.50', autoPoints:'20.40', highScore:'120', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'12116', teamName:'Redbots',                      stateRank:'44', rs:'No',  rpScore:'1.80', matchPoints:'50.70', basePoints:'10.00', autoPoints:'14.80', highScore:'87',  wlt:'4-6-0',  plays:'16' },
-  { teamNumber:'16367', teamName:'Krypton Warriors',             stateRank:'14', rs:'Yes', rpScore:'4.00', matchPoints:'87.90', basePoints:'11.50', autoPoints:'28.40', highScore:'116', wlt:'9-1-0',  plays:'16' },
-  { teamNumber:'17496', teamName:'The Knight Shift',             stateRank:'23', rs:'No',  rpScore:'3.10', matchPoints:'74.10', basePoints:'8.50',  autoPoints:'20.70', highScore:'174', wlt:'7-2-1',  plays:'16' },
-  { teamNumber:'17497', teamName:'Knight Riders',                stateRank:'17', rs:'No',  rpScore:'3.50', matchPoints:'78.00', basePoints:'11.00', autoPoints:'17.70', highScore:'205', wlt:'8-2-0',  plays:'16' },
-  { teamNumber:'17746', teamName:'Hanover Park Online Computer', stateRank:'43', rs:'No',  rpScore:'2.10', matchPoints:'49.50', basePoints:'12.00', autoPoints:'8.60',  highScore:'103', wlt:'5-4-1',  plays:'16' },
-  { teamNumber:'19747', teamName:'DYNABYTES',                    stateRank:'16', rs:'No',  rpScore:'3.70', matchPoints:'62.60', basePoints:'12.00', autoPoints:'13.60', highScore:'94',  wlt:'9-0-1',  plays:'16' },
-  { teamNumber:'21226', teamName:'RoboRaiders',                  stateRank:'20', rs:'Yes', rpScore:'3.30', matchPoints:'77.00', basePoints:'15.50', autoPoints:'22.20', highScore:'126', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'23215', teamName:'RoboLegion',                   stateRank:'27', rs:'Yes', rpScore:'3.00', matchPoints:'59.70', basePoints:'11.00', autoPoints:'17.40', highScore:'121', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'23216', teamName:'Cybernauts',                   stateRank:'47', rs:'Yes', rpScore:'1.40', matchPoints:'59.30', basePoints:'11.50', autoPoints:'11.60', highScore:'109', wlt:'2-8-0',  plays:'16' },
-  { teamNumber:'23466', teamName:'The Howlers',                  stateRank:'9',  rs:'No',  rpScore:'4.20', matchPoints:'72.90', basePoints:'13.50', autoPoints:'21.70', highScore:'148', wlt:'10-0-0', plays:'16' },
-  { teamNumber:'25703', teamName:'Team Nuclear',                 stateRank:'21', rs:'No',  rpScore:'3.10', matchPoints:'76.90', basePoints:'12.00', autoPoints:'18.50', highScore:'100', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'26014', teamName:'Ninjabotics',                  stateRank:'19', rs:'No',  rpScore:'3.30', matchPoints:'86.10', basePoints:'12.00', autoPoints:'23.30', highScore:'139', wlt:'7-2-1',  plays:'16' },
-  { teamNumber:'26341', teamName:'Tech Dynamite',                stateRank:'32', rs:'No',  rpScore:'2.80', matchPoints:'54.90', basePoints:'11.00', autoPoints:'16.10', highScore:'107', wlt:'6-4-0',  plays:'16' },
-  { teamNumber:'26444', teamName:'GearShifters',                 stateRank:'8',  rs:'No',  rpScore:'4.20', matchPoints:'81.00', basePoints:'15.00', autoPoints:'24.40', highScore:'139', wlt:'10-0-0', plays:'16' },
-  { teamNumber:'27032', teamName:'Scarlet Knightmares',          stateRank:'34', rs:'No',  rpScore:'2.70', matchPoints:'67.10', basePoints:'12.00', autoPoints:'15.80', highScore:'90',  wlt:'6-4-0',  plays:'16' },
-  { teamNumber:'30439', teamName:'Cool Name Pending',            stateRank:'15', rs:'Yes', rpScore:'3.70', matchPoints:'71.50', basePoints:'10.50', autoPoints:'28.88', highScore:'90',  wlt:'10-0-0', plays:'16' },
-  { teamNumber:'30680', teamName:'Tech B&B',                     stateRank:'',   rs:'No',  rpScore:'',     matchPoints:'',      basePoints:'',      autoPoints:'',      highScore:'',    wlt:'',       plays:'' },
-  { teamNumber:'30682', teamName:'NanoGurus 2.0',                stateRank:'28', rs:'No',  rpScore:'2.90', matchPoints:'77.90', basePoints:'14.00', autoPoints:'28.20', highScore:'112', wlt:'7-3-0',  plays:'16' },
-  { teamNumber:'31149', teamName:'Mechanical Wave',              stateRank:'2',  rs:'Yes', rpScore:'4.60', matchPoints:'97.00', basePoints:'16.00', autoPoints:'25.90', highScore:'128', wlt:'10-0-0', plays:'16' },
+
+  // ── DEEP SOUTH CONFERENCE ────────────────────────────────────────────────
+  { teamNumber:'7149',  teamName:'ENFORCERS',          conference:'Deep South',  tournamentPts:'136', stateRank:'1',  opr:'175.3', wlt:'9-2-0',  matchPoints:'',  highScore:'387', rs:'Yes', plays:'11' },
+  { teamNumber:'17036', teamName:'Robotech Anomaly',   conference:'Deep South',  tournamentPts:'83',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'18241', teamName:'Outer Galaxy',       conference:'Deep South',  tournamentPts:'74',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'9848',  teamName:'GearView',           conference:'Deep South',  tournamentPts:'68',  stateRank:'13', opr:'134.3', wlt:'6-2-0',  matchPoints:'',  highScore:'',    rs:'Yes', plays:'8'  },
+  { teamNumber:'13583', teamName:'Triple Wire',        conference:'Deep South',  tournamentPts:'54',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'20204', teamName:'Chargeing Pioneers', conference:'Deep South',  tournamentPts:'51',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'5387',  teamName:'TecHounds',          conference:'Deep South',  tournamentPts:'39',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'28830', teamName:'Flameforge',         conference:'Deep South',  tournamentPts:'37',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+
+  // ── CENTRAL CONFERENCE ───────────────────────────────────────────────────
+  { teamNumber:'31257', teamName:'KinetIQ',            conference:'Central',     tournamentPts:'83',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'19772', teamName:'Rust in Piece',      conference:'Central',     tournamentPts:'82',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'23786', teamName:'MakEMinds',          conference:'Central',     tournamentPts:'73',  stateRank:'6',  opr:'152.4', wlt:'6-3-0',  matchPoints:'',  highScore:'349', rs:'',    plays:'9'  },
+  { teamNumber:'11754', teamName:'EnergySmartFTC',     conference:'Central',     tournamentPts:'67',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'7350',  teamName:"Watt's NXT",         conference:'Central',     tournamentPts:'62',  stateRank:'17', opr:'128.2', wlt:'4-4-0',  matchPoints:'',  highScore:'',    rs:'',    plays:'8'  },
+  { teamNumber:'11697', teamName:'TECH-tonic',         conference:'Central',     tournamentPts:'51',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+
+  // ── ESSEX CONFERENCE ─────────────────────────────────────────────────────
+  { teamNumber:'4102',  teamName:'CATScan',            conference:'Essex',       tournamentPts:'104', stateRank:'18', opr:'124.8', wlt:'2-5-0',  matchPoints:'',  highScore:'358', rs:'',    plays:'7'  },
+  { teamNumber:'23650', teamName:'MillburnX',          conference:'Essex',       tournamentPts:'99',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'13302', teamName:'MKA Robotics',       conference:'Essex',       tournamentPts:'88',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'11180', teamName:'Beaks n Bolts',      conference:'Essex',       tournamentPts:'66',  stateRank:'14', opr:'133.7', wlt:'8-0-0',  matchPoints:'',  highScore:'',    rs:'',    plays:'8'  },
+  { teamNumber:'7959',  teamName:'CHS Cougars',        conference:'Essex',       tournamentPts:'63',  stateRank:'19', opr:'124.6', wlt:'5-4-0',  matchPoints:'',  highScore:'',    rs:'',    plays:'9'  },
+
+  // ── FAR NORTH CONFERENCE ─────────────────────────────────────────────────
+  { teamNumber:'23314', teamName:'Galactic Pigeon',    conference:'Far North',   tournamentPts:'113', stateRank:'20', opr:'124.4', wlt:'4-1-0',  matchPoints:'',  highScore:'',    rs:'',    plays:'5'  },
+  { teamNumber:'14450', teamName:'RoboRebels',         conference:'Far North',   tournamentPts:'88',  stateRank:'5',  opr:'155.3', wlt:'9-2-0',  matchPoints:'',  highScore:'373', rs:'',    plays:'11' },
+  { teamNumber:'23375', teamName:'Robo Raptors',       conference:'Far North',   tournamentPts:'84',  stateRank:'9',  opr:'143.2', wlt:'5-0-0',  matchPoints:'',  highScore:'',    rs:'',    plays:'5'  },
+  { teamNumber:'23268', teamName:'Ultraviolet',        conference:'Far North',   tournamentPts:'83',  stateRank:'3',  opr:'170.0', wlt:'8-3-0',  matchPoints:'',  highScore:'349', rs:'Yes', plays:'11' },
+  { teamNumber:'8902',  teamName:'Cosmic Goose',       conference:'Far North',   tournamentPts:'53',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'373', rs:'',    plays:''   },
+  { teamNumber:'248',   teamName:'Fatal Error',        conference:'Far North',   tournamentPts:'53',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+
+  // ── MORRIS CONFERENCE ────────────────────────────────────────────────────
+  { teamNumber:'30439', teamName:'Cool Name Pending',  conference:'Morris',      tournamentPts:'88',  stateRank:'15', opr:'',      wlt:'10-0-0', matchPoints:'81.00', highScore:'', rs:'Yes', plays:'16' },
+  { teamNumber:'26014', teamName:'Ninjabotics',        conference:'Morris',      tournamentPts:'86',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'31149', teamName:'Mechanical Wave',    conference:'Morris',      tournamentPts:'85',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'755',   teamName:'Delbotics',          conference:'Morris',      tournamentPts:'68',  stateRank:'4',  opr:'163.9', wlt:'6-4-0',  matchPoints:'99.50', highScore:'313', rs:'',  plays:'10' },
+  { teamNumber:'16367', teamName:'Krypton Warriors',   conference:'Morris',      tournamentPts:'57',  stateRank:'16', opr:'132.7', wlt:'4-4-0',  matchPoints:'87.90', highScore:'310', rs:'Yes', plays:'8' },
+  { teamNumber:'9889',  teamName:'Cruise Control',     conference:'Morris',      tournamentPts:'55',  stateRank:'11', opr:'137.7', wlt:'9-1-0',  matchPoints:'59.40', highScore:'237', rs:'Yes', plays:'10' },
+
+  // ── NORTHEAST CONFERENCE ─────────────────────────────────────────────────
+  { teamNumber:'17670', teamName:'Raider Robotics',    conference:'Northeast',   tournamentPts:'134', stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'17009', teamName:'Steel Mangolias',    conference:'Northeast',   tournamentPts:'84',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'16557', teamName:'Honey K-Ohms',       conference:'Northeast',   tournamentPts:'71',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'5968',  teamName:'WR That Hertz',      conference:'Northeast',   tournamentPts:'68',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'10785', teamName:'Highlanders',        conference:'Northeast',   tournamentPts:'62',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'22704', teamName:'Robo Redwings',      conference:'Northeast',   tournamentPts:'54',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+
+  // ── UPPER SOUTH CONFERENCE ───────────────────────────────────────────────
+  { teamNumber:'22261', teamName:'Hornet Blue',        conference:'Upper South', tournamentPts:'134', stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'19735', teamName:'Hornet Silver',      conference:'Upper South', tournamentPts:'76',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'14481', teamName:"Don't Blink",        conference:'Upper South', tournamentPts:'63',  stateRank:'2',  opr:'170.9', wlt:'7-1-0',  matchPoints:'',  highScore:'358', rs:'Yes', plays:'8'  },
+  { teamNumber:'25710', teamName:'ALPINE ROBOTICS',    conference:'Upper South', tournamentPts:'58',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
+  { teamNumber:'26910', teamName:'Mud Head Car',       conference:'Upper South', tournamentPts:'56',  stateRank:'12', opr:'135.6', wlt:'5-3-0',  matchPoints:'',  highScore:'313', rs:'',    plays:'8'  },
+  { teamNumber:'23490', teamName:'Beta Blink',         conference:'Upper South', tournamentPts:'54',  stateRank:'',  opr:'',      wlt:'',        matchPoints:'',  highScore:'',    rs:'',    plays:''   },
 ];
