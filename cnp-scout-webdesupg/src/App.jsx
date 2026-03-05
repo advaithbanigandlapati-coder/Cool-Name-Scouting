@@ -16,10 +16,46 @@ const LS = {
   set: (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); } catch {} },
 };
 
+const TEAMS_VERSION = 'states-v1';
+
 function seedTeams() {
-  const saved = LS.get('cnp_teams', null);
-  if (saved && saved.length > 0) return saved;
-  return INITIAL_TEAMS.map(t => ({ ...BLANK_TEAM, ...t }));
+  const saved    = LS.get('cnp_teams', null);
+  const savedVer = LS.get('cnp_teams_version', null);
+  if (saved && saved.length > 0 && savedVer === TEAMS_VERSION) return saved;
+  // Version mismatch — load fresh from initialTeams, but preserve any scouted data
+  const fresh = INITIAL_TEAMS.map(t => ({ ...BLANK_TEAM, ...t }));
+  if (saved && saved.length > 0) {
+    // Carry over human-scouted fields from old data
+    const scoutedMap = Object.fromEntries(saved.map(t => [t.teamNumber, t]));
+    return fresh.map(t => {
+      const old = scoutedMap[t.teamNumber];
+      if (!old) return t;
+      return {
+        ...t,
+        // keep scouted form data
+        hasAuto:         old.hasAuto         ?? t.hasAuto,
+        autoClose:       old.autoClose       ?? t.autoClose,
+        autoFar:         old.autoFar         ?? t.autoFar,
+        leave:           old.leave           ?? t.leave,
+        autoArtifacts:   old.autoArtifacts   || t.autoArtifacts,
+        teleopArtifacts: old.teleopArtifacts || t.teleopArtifacts,
+        canShoot:        old.canShoot        ?? t.canShoot,
+        shootRange:      old.shootRange      || t.shootRange,
+        motifPriority:   old.motifPriority   ?? t.motifPriority,
+        playsDefense:    old.playsDefense    ?? t.playsDefense,
+        defenseExplain:  old.defenseExplain  || t.defenseExplain,
+        parkType:        old.parkType        || t.parkType,
+        stratNotes:      old.stratNotes      || t.stratNotes,
+        allianceTarget:  old.allianceTarget  || t.allianceTarget,
+        humanEdits:      old.humanEdits      || t.humanEdits,
+        tier:            old.tier            || t.tier,
+        compatScore:     old.compatScore     || t.compatScore,
+        withTips:        old.withTips        || t.withTips,
+        againstTips:     old.againstTips     || t.againstTips,
+      };
+    });
+  }
+  return fresh;
 }
 
 export default function App() {
@@ -40,7 +76,7 @@ export default function App() {
     setArchive(prev => { const next=[snap,...prev].slice(0,10); LS.set('cnp_archive',next); return next; });
   }
 
-  useEffect(()=>{ LS.set('cnp_teams',    teams);        }, [teams]);
+  useEffect(()=>{ LS.set('cnp_teams', teams); LS.set('cnp_teams_version', TEAMS_VERSION); }, [teams]);
   useEffect(()=>{ LS.set('cnp_settings', settings);     }, [settings]);
   useEffect(()=>{ LS.set('cnp_mine',     mine);         }, [mine]);
   useEffect(()=>{ LS.set('cnp_matches',  matchEntries); }, [matchEntries]);
