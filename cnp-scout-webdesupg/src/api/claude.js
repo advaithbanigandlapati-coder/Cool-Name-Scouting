@@ -41,9 +41,8 @@ ${corrections.length ? `HUMAN CORRECTIONS (never override):\n${corrections.join(
 ═══ ALL TEAMS ═══
 ${teams.map(t => teamBlock(t, `#${t.teamNumber} "${t.teamName||'Unknown'}"`)).join('\n\n')}
 
-Use web_search to verify OPR/EPA/record on FTCScout for DECODE 2025-26 for any teams missing data.
-
-Return ONLY a valid JSON array — NO markdown, NO preamble, NO explanation, NO text outside the array brackets:
+Return ONLY a valid JSON array — NO markdown, NO preamble, NO text outside the brackets.
+Tier must be EXACTLY one of: "OPTIMAL" (great ally), "MID" (decent), "BAD" (avoid/threat). No other values.
 [{"teamNumber":"XXXX","tier":"OPTIMAL","compatScore":88,"notes":"...","complementary":"...","whyAlliance":"...","withTips":["","",""],"againstTips":["","",""]}]`;
 }
 
@@ -71,8 +70,7 @@ function extractJSON(raw) {
 export async function runAnalysis(teams, mine) {
   const body = {
     model: 'claude-sonnet-4-20250514',
-    max_tokens: 8000,
-    tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+    max_tokens: 16000,
     messages: [{ role: 'user', content: buildPrompt(teams, mine) }],
   };
   const res  = await fetch('/api/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
