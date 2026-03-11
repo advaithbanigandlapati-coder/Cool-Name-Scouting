@@ -211,15 +211,39 @@ export default function ChatTab({teams,mine,settings}){
 
   useEffect(()=>{bottomRef.current?.scrollIntoView({behavior:'smooth'});},[messages]);
 
-  const SYSTEM=`You are CNP Scout AI for FTC team #${mine?.teamNumber||30439} (Cool Name Pending), DECODE 25-26. Answer any question directly with real numbers and decisive recommendations. Use web_search to look up current FTCScout.com data, recent match results, team pages, or any info that might be outdated — always prefer fresh web data over stored stats when relevant.
+  // Compressed team data — only non-empty fields to stay under token limits
+  const teamLine = t => {
+    const f = [];
+    f.push(`#${t.teamNumber} ${t.teamName||'?'}`);
+    if(t.conference)        f.push(`conf=${t.conference}`);
+    if(t.tournamentPts)     f.push(`tpts=${t.tournamentPts}`);
+    if(t.stateRank)         f.push(`rank=${t.stateRank}`);
+    if(t.opr)               f.push(`opr=${t.opr}`);
+    if(t.wlt)               f.push(`wlt=${t.wlt}`);
+    if(t.highScore)         f.push(`high=${t.highScore}`);
+    if(t.tier)              f.push(`tier=${t.tier}`);
+    if(t.compatScore)       f.push(`compat=${t.compatScore}%`);
+    if(t.allianceTarget)    f.push(`TARGET`);
+    if(t.hasAuto!=null)     f.push(`auto=${t.hasAuto?'Y':'N'}`);
+    if(t.autoClose)         f.push(`closeAuto`);
+    if(t.autoFar)           f.push(`farAuto`);
+    if(t.canShoot!=null)    f.push(`shoots=${t.canShoot?'Y':'N'}`);
+    if(t.shootRange)        f.push(`range=${t.shootRange}`);
+    if(t.playsDefense)      f.push(`DEFENSE`);
+    if(t.parkType)          f.push(`park=${t.parkType}`);
+    if(t.autoArtifacts||t.avgAuto) f.push(`autoArt=${t.autoArtifacts||t.avgAuto}`);
+    if(t.teleopArtifacts||t.avgTeleop) f.push(`tpArt=${t.teleopArtifacts||t.avgTeleop}`);
+    const notes = t.stratNotes||t.notes||t.scoutNotes||'';
+    if(notes) f.push(`notes="${notes.slice(0,60)}"`);
+    if(t.withTips?.length)  f.push(`with="${t.withTips.slice(0,2).join(';')}"`);
+    if(t.againstTips?.length) f.push(`against="${t.againstTips.slice(0,2).join(';')}"`);
+    return f.join(' ');
+  };
 
-ONLY generate a structured markdown report (with # headers and tables) when the user explicitly asks for a report, analysis document, or printable output. For regular questions, respond conversationally.
-
-OUR ROBOT (#${mine?.teamNumber||30439}): 12 auto artifacts, 25 teleop, close+far auto, full base return.
-
-TEAM DATA:
-${teams.map(t=>`#${t.teamNumber} ${t.teamName||'?'}: rank=${t.stateRank||'?'} wlt=${t.wlt||'?'} pts=${t.matchPoints||'?'} high=${t.highScore||'?'} opr=${t.opr||'?'} epa=${t.epa||'?'} rs=${t.rs||'?'} tier=${t.tier||'?'} compat=${t.compatScore||'?'}% target=${!!t.allianceTarget} hasAuto=${t.hasAuto} closeAuto=${t.autoClose} farAuto=${t.autoFar} leave=${t.leave} readsMotif=${t.readsMotif} autoArt=${t.autoArtifacts||t.avgAuto||'?'} tpArt=${t.teleopArtifacts||t.avgTeleop||'?'} shoots=${t.canShoot} range=${t.shootRange||'?'} motifPri=${t.motifPriority} defense=${t.playsDefense} park=${t.parkType||t.endgame||'?'} notes="${t.stratNotes||t.notes||t.scoutNotes||''}" with="${(t.withTips||[]).join(';')}" against="${(t.againstTips||[]).join(';')}"`)
-.join('\n')}`;
+  const SYSTEM=`CNP Scout AI for #${mine?.teamNumber||30439} Cool Name Pending, DECODE 25-26 NJ States. Answer directly with real numbers. Use web_search for current data. Only generate markdown reports with # headers when explicitly asked — otherwise respond conversationally.
+OUR ROBOT: 12 auto artifacts, 25 teleop, close+far auto, full base return.
+TEAMS:
+${teams.map(teamLine).join('\n')}`;
 
   function saveArchive(msgs){
     const a=lsGet('cnp_chat_archive',[]);
