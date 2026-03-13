@@ -88,4 +88,4 @@ export const TABLE_COLS = [
   { key: 'avgBallsTeleop', label: 'TP Avg',     width: 75,  ai: false },
   { key: 'endgamePlan',    label: 'Endgame',    width: 140, ai: false },
   { key: 'tier',           label: 'Tier',       width: 90,  ai: true,  type: 'tier' },
-];\
+];
