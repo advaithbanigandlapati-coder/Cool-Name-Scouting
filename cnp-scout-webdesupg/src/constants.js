@@ -20,7 +20,7 @@ export const BLANK_TEAM = {
   stateRank: '', rs: '', rpScore: '',
   rp: '', judgingAP: '', totalAP: '',
   matchPoints: '', basePoints: '', autoPoints: '', highScore: '', wlt: '', plays: '',
-  opr: '', epa: '',
+  opr: '', penaltyOpr: '', epa: '',
   allianceTarget: false,
   // DECODE scouted from form
   hasAuto: false,
@@ -50,7 +50,7 @@ export const DEFAULT_MINE = {
   teleopClassified: 0, teleopOverflow: 0, teleopDepot: 0, teleopPatternPts: 0,
   opensGate: false, baseResult: 'none',
   strengths: '', weaknesses: '', strategy: '', extraNotes: '',
-  matchPoints: '', basePoints: '', autoPoints: '', highScore: '', wlt: '', opr: '', epa: '',
+  matchPoints: '', basePoints: '', autoPoints: '', highScore: '', wlt: '', opr: '', penaltyOpr: '', epa: '',
 };
 
 // Google Form column headers from the PI3 scouting form
@@ -83,6 +83,7 @@ export const TABLE_COLS = [
   { key: 'wlt',            label: 'W-L-T',      width: 95,  ai: false },
   { key: 'plays',          label: 'Plays',      width: 60,  ai: false },
   { key: 'opr',            label: 'OPR',        width: 75,  ai: false },
+  { key: 'penaltyOpr',    label: 'OPR+Pen',    width: 80,  ai: false },
   { key: 'epa',            label: 'EPA',        width: 75,  ai: false },
   { key: 'avgBallsAuto',   label: 'Auto Avg',   width: 80,  ai: false },
   { key: 'avgBallsTeleop', label: 'TP Avg',     width: 75,  ai: false },
