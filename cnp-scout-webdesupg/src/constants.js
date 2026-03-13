@@ -69,7 +69,7 @@ export const FIELD_LABELS = {
 };
 
 export const TABLE_COLS = [
-  { key: 'allianceTarget', label: '★ Target', width: 70,  ai: false },
+  { key: 'allianceTarget', label: '★ Target', width: 70,  ai: false, type: 'star' },
   { key: 'stateRank',      label: 'Rank',      width: 70,  ai: false },
   { key: 'rs',             label: 'RS',         width: 55,  ai: false },
   { key: 'rp',            label: 'RP',         width: 55,  ai: false },
@@ -87,5 +87,5 @@ export const TABLE_COLS = [
   { key: 'avgBallsAuto',   label: 'Auto Avg',   width: 80,  ai: false },
   { key: 'avgBallsTeleop', label: 'TP Avg',     width: 75,  ai: false },
   { key: 'endgamePlan',    label: 'Endgame',    width: 140, ai: false },
-  { key: 'tier',           label: 'Tier',       width: 90,  ai: true  },
+  { key: 'tier',           label: 'Tier',       width: 90,  ai: true,  type: 'tier' },
 ];\
