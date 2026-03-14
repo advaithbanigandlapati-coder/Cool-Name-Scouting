@@ -16,7 +16,7 @@ const LS = {
   set: (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); } catch {} },
 };
 
-const TEAMS_VERSION = 'states-v3';
+const TEAMS_VERSION = 'states-v5';
 
 function seedTeams() {
   const saved    = LS.get('cnp_teams', null);
